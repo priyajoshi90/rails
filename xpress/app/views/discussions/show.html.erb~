@@ -1,0 +1,85 @@
+<div id='wel'><h2 align='center' style="color:#2781BA">Welcome to the Blog Application!</h2><hr id='welcome'/></div>
+<div class='leftnav'>
+<ul>
+<% if blogger_signed_in? %>
+	<% if (current_blogger.detail.role.eql?('su')) or (current_blogger.detail.role.eql?('admin')) %>
+		<li><%= link_to 'Add new User', new_blogger_registration_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'View all Users', show_blogger_registration_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'View all Blogs', blogs_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'View all Discussions', discussions_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'Sign Out', destroy_blogger_session_url, method: :delete %><hr /></li>
+	<% end %>
+<% elsif (blogger_signed_in? && current_blogger.detail.role.eql?('normal')) %>
+<li><%= link_to 'New Blog', new_blog_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'My Blogs', blogs_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'New Discussion', new_discussion_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'My Discussions', discussions_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'Sign Out', destroy_blogger_session_url, method: :delete %><hr /></li>
+<% else -%>
+<li><%= link_to 'View Blogs', blogs_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View Discussions', discussions_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'Sign In', new_blogger_session_path %><hr /></li>
+<% end %>
+</ul>
+</div>
+<div class='rightnav'>
+<div class='main'>
+<p id="notice"><%= notice %></p>
+<div>
+  <b>Topic:</b>
+  <%= @discussion.topic %>
+</div>
+<br />
+
+<div>
+  <b>Detail:</b>
+  <%= @discussion.detail %>
+</div>
+<br />
+<div>
+  <b>Created by:</b>
+  <%= @discussion.blogger.detail.firstname+" "+@discussion.blogger.detail.lastname %>
+</div>
+<br />
+
+<div>
+  <b>Created On: </b><%= (@discussion.created_at.in_time_zone(TZInfo::Timezone.get('Asia/Kolkata')).to_s.split(" "))[0]+" at "+(@discussion.created_at.in_time_zone(TZInfo::Timezone.get('Asia/Kolkata')).to_s.split(" "))[1] %><b> IST</b>
+</div>
+<br />
+
+<% if @response.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@response.errors.count, "error") %> prohibited this response from being saved:</h2>
+ 
+    <ul>
+    <% @response.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<hr />
+<br />
+<%= render @discussion.responses %>
+
+<hr />
+<br />
+<%= render "responses/form" %>
+<br /><br />
+<% if blogger_signed_in? and current_blogger.id.to_s.eql?(@discussion.blogger_id.to_s) -%>
+<%= link_to 'Edit', edit_discussion_path(@discussion) %> |
+<% end -%>
+<%= link_to 'Back', discussions_path %>
+</div>
+</div>

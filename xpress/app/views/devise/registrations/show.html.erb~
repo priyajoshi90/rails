@@ -1,0 +1,40 @@
+
+<div id='wel'><h2 align='center' style="color:#F0710A">Welcome to the Blog Application!</h2><hr id='welcome'/></div>
+<div class='leftnav'>
+<ul>
+<li><%= link_to 'Add new User', new_blogger_registration_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Users', show_blogger_registration_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Blogs', blogs_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Discussions', discussions_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'Sign Out', destroy_blogger_session_url, method: :delete %><hr /></li>
+</ul>
+</div>
+<div class='rightnav'>
+<div id='notice'><%= notice %></div>
+<div align='center' class='main'>
+<table align='center' cellspacing='0px' cellpadding='20px' border='1px solid black' height='200px' width='400px'>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Edit User</th>
+</tr>
+<% @bloggers.each do |blogger|%>
+	<% if !(blogger.detail.role.eql?('su')) %>
+		<tr>
+		<td><%= blogger.detail.firstname+''+blogger.detail.lastname %></td>
+		<td><%= blogger.email %></td>
+		<td><%= link_to 'Edit', edit_blogger_registration_url(blogger.detail) %></td>
+		
+	<% end %>
+<% end %>
+<p><%= will_paginate @bloggers %></p>
+</table
+</div>
+</div>
+</div>
+
+	

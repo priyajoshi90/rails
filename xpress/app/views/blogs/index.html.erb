@@ -1,0 +1,66 @@
+<script>
+$(function() {
+	$( "#accordion" ).accordion({
+		collapsible: true,
+			heightStyle: "content"
+	});
+});
+</script>
+
+
+<div id='wel'><h2 align='center' style="color:#2781BA">Welcome to the Blog Application!</h2><hr id='welcome'/></div>
+<div class='leftnav'>
+<ul>
+<% if blogger_signed_in? %>
+	<% if (current_blogger.detail.role.eql?('su')) or (current_blogger.detail.role.eql?('admin')) %>
+		<li><%= link_to 'Add new User', new_blogger_registration_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'View all Users', show_blogger_registration_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'View all Blogs', blogs_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'View all Discussions', discussions_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'Sign Out', destroy_blogger_session_url, method: :delete %><hr /></li>
+	<% elsif blogger_signed_in? && current_blogger.detail.role.eql?('normal') %>
+		<li><%= link_to 'New Blog', new_blog_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'My Blogs', blogs_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'New Discussion', new_discussion_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'My Discussions', discussions_url %><hr /></li>
+		<br /><br />
+		<li><%= link_to 'Sign Out', destroy_blogger_session_url, method: :delete %><hr /></li>
+	<% end %>
+
+<% else %>
+<li><%= link_to 'View Blogs', blogs_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View Discussions', discussions_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'Sign In', new_blogger_session_path %><hr /></li>
+<% end %>
+</ul>
+</div>
+<div class = 'rightnav'>
+<div class='main'>
+	<p id="notice"><%= notice %></p>
+<div id='accordion'>
+	<% if blogger_signed_in? and @blogs != nil %>
+		<% @blogs.each do |blog| %>
+			<h3><b><% if blog.no_of_comments.to_i > 10 %><sup>*</sup><% end -%><b><%= blog.no_of_comments %>&nbsp;Comments:&nbsp;</b><%= link_to blog.title, blog_url(blog) %>&nbsp;<% if current_blogger.detail.role.eql?("admin") -%>by <%=blog.blogger.detail.firstname+" "+blog.blogger.detail.lastname %><% end -%></b></h3><div><b><%= link_to 'Read & Comment', blog_url(blog) %></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><%= link_to 'Edit', edit_blog_path(blog) %></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b><%= link_to 'Delete', blog, method: :delete, data: { confirm: 'Are you sure?' } %></b><br /><br />
+			<div class='blog'><p id='bl'><%= blog.content %></p></div><br /><div class='blog'><p id='com'><b>Comments: </b><%= blog.no_of_comments %></p><%= render blog.comments %></div></div>
+		<% end %>
+	<% elsif @blogs != nil %>
+		<% @blogs.each do |blog| %>
+			<h3><b><% if blog.no_of_comments.to_i > 10 %><sup>*</sup><% end -%><b><%= blog.no_of_comments %>&nbsp;Comments:&nbsp;</b><%= link_to blog.title, blog_url(blog) %>&nbsp;<%= blog.blogger.detail.firstname+" "+blog.blogger.detail.lastname %></b></h3><div><b><%= link_to 'Read & Comment', blog_url(blog) %></b><br /><br />
+			<div class='blog'><p id='bl'><%= blog.content %></p></div><br /><div class='blog'><p id='com'><b>Comments: </b><%= blog.no_of_comments %></p><%= render blog.comments %></div></div>
+		<% end %>		
+	<% end %>
+</div>
+
+	<br />
+	<%= link_to 'New Blog', new_blog_path %>
+</div>
+</div>

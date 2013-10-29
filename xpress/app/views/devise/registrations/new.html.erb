@@ -1,0 +1,56 @@
+<script>
+$(function() {
+	$( "#datepicker" ).datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+});
+</script>
+
+<div id='wel'><h2 align='center' style="color:#2781BA">Welcome to the Blog Application!</h2><hr id='welcome'/></div>
+<div class='leftnav'>
+<ul>
+<li><%= link_to 'Add new User', new_blogger_registration_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Users', show_blogger_registration_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Blogs', blogs_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Discussions', discussions_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'Sign Out', destroy_blogger_session_url, method: :delete %><hr /></li>
+</ul>
+</div>
+<div class='rightnav'>
+<div align='center' class='regForm'>
+<%= form_tag(blogger_registration_url, :method => 'post') %>
+<sup align='center'><%= devise_error_messages! %></sup>
+<table align='center' cellspacing='10px' cellpadding='5px' border='0px'>
+<tr><td>First Name:</td><td><%= text_field(:detail, :firstname, :autofocus => true) %></td></tr>
+<tr><td>Last Name:</td><td><%= text_field(:detail, :lastname) %></td></tr>
+<tr><td>DOB:</td><td><input type='text' id='datepicker' name='detail[dob]' readonly='readonly' /></td></tr>
+<tr><td>Gender</td><td><%= radio_button_tag(:gender, "Male", :checked => true) %>Male&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<%= radio_button_tag(:gender, "Female") %>Female</td></tr>
+<% row = 5; col = 43 %>
+<tr><td>Address:</td><td><%= text_area(:detail, :address, :rows => row.to_s, :cols => col.to_s) %></td></tr>
+<tr><td>Hobbies:</td><td>
+<input type='checkbox' id='hobbies1' name='hobbies[]' value='Singing' />Singing
+<input type='checkbox' id='hobbies2' name='hobbies[]' value='Dancing' />Dancing
+<input type='checkbox' id='hobbies3' name='hobbies[]' value='Reading' />Reading
+<input type='checkbox' id='hobbies4' name='hobbies[]' value='Playing' />Playing
+</td></tr>
+<tr><td>Email:</td><td><%= email_field(:blogger, :email) %></td</tr>
+<tr><td>Password:</td><td><%= password_field(:blogger, :password) %></td</tr>
+<tr><td>Confirm Password:</td><td><%= password_field(:blogger, :password_confirmation) %></td</tr>
+<tr><td>Role:</td><td>
+<select id='detail_role' name='detail[role]'>
+<option value='normal'>Normal User</option>
+<option value='admin'>Administrator</option>
+</select>
+</td></tr>
+</table>
+<br />
+<div><%= submit_tag "Sign up" %>&nbsp;&nbsp;&nbsp;<input type='button' value='Back to Home' onclick="window.location.href='http://localhost:3000'"</div>
+</form>
+</div>
+</div>
+</div>

@@ -1,0 +1,69 @@
+<h2>Edit <%= resource_name.to_s.humanize %></h2>
+
+<script>
+$(function() {
+	$( "#datepicker" ).datepicker({
+		changeMonth: true,
+		changeYear: true
+	});
+});
+</script>
+
+<div id='wel'><h2 align='center' style="color:#F0710A">Welcome to the Blog Application!</h2><hr id='welcome'/></div>
+<div class='leftnav'>
+<ul>
+<li><%= link_to 'Add new User', new_blogger_registration_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Users', show_blogger_registration_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Blogs', blogs_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'View all Discussions', discussions_url %><hr /></li>
+<br /><br />
+<li><%= link_to 'Sign Out', destroy_blogger_session_url, method: :delete %><hr /></li>
+</ul>
+</div>
+<div class='rightnav'>
+<div id='notice'><%= notice %></div>
+<div align='center' class='regForm'>
+<%= form_tag(update_blogger_registration_url, :method => 'put') %>
+<sup align='center'><%= devise_error_messages! %></sup>
+
+<table align='center' cellspacing='10px' cellpadding='5px' border='0px'>
+<tr><td>First Name:</td><td><%= text_field(:detail, :firstname, :autofocus => true, :value => @blogger.detail.firstname) %></td></tr>
+<tr><td>Last Name:</td><td><%= text_field(:detail, :lastname, :value => @blogger.detail.lastname) %></td></tr>
+<%
+dob = (@blogger.detail.dob).to_s.split('-')
+-%>
+<tr><td>DOB:</td><td><input type='text' id='datepicker' name='detail[dob]' readonly='readonly' value='<%= dob[1]+"/"+dob[2]+"/"+dob[0] %>' /></td></tr>
+<tr><td>Gender</td><td><input type='radio' id='gender_Male' name='gender' <% if @blogger.detail.gender.eql?("Male") -%>checked='checked' <% elsif !@blogger.detail.gender.eql?("Female") -%>checked='checked'<% end -%> value='Male' />Male&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type='radio' id='gender_Female' name='gender' <% if @blogger.detail.gender.eql?("Female") -%>checked='checked' <% elsif !@blogger.detail.gender.eql?("Male") -%>checked='checked' <% end -%>  value='Female' />Female</td></tr>
+<% row = 5; col = 43 %>
+<tr><td>Address:</td><td><%= text_area(:detail, :address, :rows => row.to_s, :cols => col.to_s, :value => @blogger.detail.address) %></td></tr>
+<tr><td>Hobbies:</td><td>
+<%
+    hobs = @blogger.detail.hobbies.split(',')
+    count = 1
+    if hobs != nil
+-%>
+<input type='checkbox' id='hobbies1' name='hobbies[]' value='Singing' <% hobs.each do |hob| if hob.eql?("Singing"); then -%>checked='checked' <% end; end; -%> >Singing</input>  
+<input type='checkbox' id='hobbies2' name='hobbies[]' value='Dancing' <% hobs.each do |hob| if hob.eql?("Dancing"); then -%>checked='checked' <% end; end; -%> >Dancing</input>  
+<input type='checkbox' id='hobbies3' name='hobbies[]' value='Reading' <% hobs.each do |hob| if hob.eql?("Reading"); then -%>checked='checked' <% end; end; -%> >Reading</input>  
+<input type='checkbox' id='hobbies4' name='hobbies[]' value='Playing' <% hobs.each do |hob| if hob.eql?("Playing"); then -%>checked='checked' <% end; end; -%> >Playing</input>
+<% end -%>
+</td></tr>
+<tr><td>Email:</td><td><%= email_field(:blogger, :email, :readonly => :readonly) %></td</tr>
+<tr><td>Password:</td><td><%= password_field(:blogger, :password) %></td</tr>
+<tr><td>Confirm Password:</td><td><%= password_field(:blogger, :password_confirmation) %></td</tr>
+<tr><td>Role:</td><td>
+<select id='detail_role' name='detail[role]'>
+<option value='normal' <% if @blogger.detail.role.eql?("normal") -%>selected='selected' <% end -%>>Normal User</option>
+<option value='admin' <% if @blogger.detail.role.eql?("admin") -%>selected='selected' <% end -%>>Administrator</option>
+</select>
+</td></tr>
+</table>
+<br />
+<div><%= submit_tag "Edit Blogger" %>   <input type='button' value='Back to Home' onclick="window.location.href='http://localhost'" /></div>
+</form>
+</div>
+</div>
+</div>

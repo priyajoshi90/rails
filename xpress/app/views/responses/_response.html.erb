@@ -1,0 +1,1 @@
+<div><strong><%= response.responder %>:</strong>&nbsp;<%= response.response1 %><% if blogger_signed_in? -%><% if current_blogger.id.to_s.eql?(response.discussion.blogger_id.to_s) -%>&nbsp;&nbsp;<%= link_to 'Delete', [response.discussion, response], method: :delete, data: { confirm: 'Are you sure?' } %><% end -%><% end -%></div><br />

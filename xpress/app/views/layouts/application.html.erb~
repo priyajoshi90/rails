@@ -1,0 +1,32 @@
+<%
+response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate" # HTTP 1.1.
+response.headers["Pragma"] = "no-cache" # HTTP 1.0.
+response.headers["Expires"] = "0" # Proxies.
+%>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>xPress | Rails blogging application</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div class='wrapper'>
+<div class='header'>
+</div>
+<div class='content'>
+<% if blogger_signed_in? -%>
+<div id='user'>Welcome: <%= current_blogger.detail.firstname %></div>
+<% else -%>
+<div id='user'>Welcome: Guest</div>
+<% end -%>
+<%= yield %>
+
+<div id='welf'><hr /><h4 align='center' style="color:#2781BA">&copy;Tata Consultany Services Ltd.</h4><h6 align='center'>Best viewed in resolution 1366x768</h6></div>
+</div>
+<div id='footer_push'></div>
+</div>
+<div class='footer'></div>
+</body>
+</html>

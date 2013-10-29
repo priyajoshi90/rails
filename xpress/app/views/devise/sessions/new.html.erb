@@ -1,0 +1,20 @@
+<div id='wel'><h2 align='center' style="color:#2781BA">Welcome to the Blog Application!</h2><hr id='welcome'/></div>
+<div class='nav'>
+<div class='main'>
+<p id="notice"><%= notice %></p>
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+<%= devise_error_messages! %>
+<table align='center' cellspacing='10px' cellpadding='5px' border='0px'>
+<tr><td><%= f.label :email %></td><td><%= f.email_field :email, :autofocus => true %></td></tr>
+<tr><td><%= f.label :password %></td><td><%= f.password_field :password %></td></tr>
+</table>
+<table align='center' cellspacing='0px' cellpadding='5px' border='0px'>
+<% if devise_mapping.rememberable? -%>
+<tr><td><span align='center'><%= f.check_box :remember_me %> <%= f.label :remember_me %></span></td><tr>
+<% end -%>
+<tr><td><p align='center'><%= f.submit "Sign in" %></p></td></tr>
+<% end %>
+<tr><td><%= render "devise/shared/links" %></td></tr>
+</table>
+</div>
+</div>
