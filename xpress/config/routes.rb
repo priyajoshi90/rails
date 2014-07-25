@@ -10,6 +10,8 @@ Xpress::Application.routes.draw do
 	get '/bloggers/show', to: 'registration#show', as: 'show_blogger_registration'
 	get '/bloggers/:id/edit', to: 'registration#edit', as: 'edit_blogger_registration'
 	put '/bloggers', to: 'registration#update', as: 'update_blogger_registration'
+  #match '/' => 'blogs#index', :as => :index, :via => :post
+
   end
 
   # resources :blogs

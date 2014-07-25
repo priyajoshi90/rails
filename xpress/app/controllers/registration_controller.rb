@@ -61,6 +61,7 @@ prepend_before_filter :require_no_authentication, :except => [ :index, :new, :cr
 	end
 	
 	def show
+
 		@bloggers = Blogger.paginate page: params[:page], order: 'created_at desc',
       per_page: 5
 	end
