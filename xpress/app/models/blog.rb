@@ -4,6 +4,14 @@ class Blog < ActiveRecord::Base
   attr_accessible :content, :no_of_comments, :title
 
   searchable do 
-  	text :title, :content
+  	text :title, :boost => 5
+  	text :content
+  	text :no_of_comments
+  	text :comments do
+  		comments.map(&:comment)
+  	end 
+  	text :blogger, :boost => 5 do
+  		blogger.detail.firstname
+    end
   end
 end

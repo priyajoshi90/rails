@@ -3,12 +3,17 @@ class BlogsController < ApplicationController
 before_filter :authenticate_blogger!, :except => [:index, :show]
 
   def index
+  	@search = Blog.search do
+  		fulltext params[:search] do 
+  			fields(:comments,:blogger)
+  		end
+  	end
 	if blogger_signed_in? && current_blogger.detail.role.eql?('normal')
 		@blogs = current_blogger.blogs
 	elsif blogger_signed_in? and current_blogger.detail.role.eql?("admin")
-		@blogs = Blog.all
+		@blogs = @search.results
 	else
-		@blogs = Blog.all
+		@blogs = @search.results
 	end
   end
 

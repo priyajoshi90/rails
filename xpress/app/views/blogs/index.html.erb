@@ -46,7 +46,12 @@ $(function() {
 <div class = 'rightnav'>
 <div class='main'>
 	<p id="notice"><%= notice %></p>
-
+	<%= form_tag blogs_url, :method => :get do %>
+		<p>
+			<%= text_field_tag :search, params[:search] %>
+			<%= submit_tag "Search", :name => nil %>
+		</p>
+	<% end %>
 <div id='accordion'>
 	<% if blogger_signed_in? and @blogs != nil %>
 		<% @blogs.each do |blog| %>
