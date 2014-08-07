@@ -4,13 +4,16 @@ gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
+gem 'actionpack', '3.2.13'
 
 gem 'mysql2'
 gem 'devise', '~> 2.2.3'
 gem 'cancan', '~> 1.6.9'
 gem 'will_paginate', '~> 3.0' 
 gem 'sunspot_rails'
-
+gem 'pry'
+#gem 'mocha', '0.9.10'
+# gem 'ruby-debug'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -23,6 +26,10 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+group :development, :test do 
+	gem 'rspec-rails'
+end
+
 group :development do
 	gem 'sunspot_solr'
 end
@@ -30,7 +37,9 @@ end
 gem 'jquery-rails', '~> 3.0.4'
 #gem 'jquery-ui-rails', '~> 4.0.5'
 gem 'jquery-ui-themes', '~> 0.0.11'
-
+gem 'metric_fu'
+gem 'metrical'
+gem "simplecov", :require => false, :group => :test
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
