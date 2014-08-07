@@ -12,6 +12,11 @@ gem 'cancan', '~> 1.6.9'
 gem 'will_paginate', '~> 3.0' 
 gem 'sunspot_rails'
 gem 'pry'
+
+group :development do
+	gem 'better_errors'
+	gem 'binding_of_caller'
+end
 #gem 'mocha', '0.9.10'
 # gem 'ruby-debug'
 # Gems used only for assets and not required

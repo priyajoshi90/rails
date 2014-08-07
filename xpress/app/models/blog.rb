@@ -10,8 +10,5 @@ class Blog < ActiveRecord::Base
   	text :comments do
   		comments.map(&:comment)
   	end 
-  	text :blogger, :boost => 5 do
-  		blogger.detail.firstname
-    end
   end
 end

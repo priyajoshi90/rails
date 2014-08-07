@@ -4,12 +4,13 @@ before_filter :authenticate_blogger!, :except => [:index, :show]
 
   def index
   	@search = Blog.search do
-  		fulltext params[:search] do 
-  			fields(:comments,:blogger)
-  		end
+  		fulltext params[:search]
   	end
 	if blogger_signed_in? && current_blogger.detail.role.eql?('normal')
-		@blogs = current_blogger.blogs
+		@search = Blog.where(:blogger_id => current_blogger.id).search do
+			fulltext params[:search]
+		end
+		@blogs = @search.results
 	elsif blogger_signed_in? and current_blogger.detail.role.eql?("admin")
 		@blogs = @search.results
 	else
